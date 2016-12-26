@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta property="qc:admins" content="01676642316411516375"/>
+    <meta name="keywords" content="fly,layui,前端社区">
+    <meta name="description" content="Fly社区是跨设备模块化前端框架layui的官网社区，致力于为web开发提供强劲动力">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Fly - layui前端框架官方社区</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_001z27klwvobt9.css">
+    <link rel="stylesheet" href="__PUBLIC__/layui/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/layui/global.css">
+    <link rel="stylesheet" href="__PUBLIC__/layui/layer.css">
+    <link rel="stylesheet" data-href="http://res.layui.com/css/fly/stretch.css?t=1481642781458" class="fly-style">
+    <link rel="stylesheet" data-href="__PUBLIC__/layui/css/layui.css">
+</head>
+<body>
+<div class="header">
+    <div class="main"><a class="logo" href="__ROOT__/" title="Fly">Fly社区</a>
+        <div class="nav">
+            <a href="/jie/"> <i class="iconfont icon-wenda"></i>首页 </a>
+            <a href="/case/2016/"><i class="iconfont icon-iconmingxinganli" style="top: 2px;"></i>时间轴 </a>
+            <a href="http://www.layui.com/"> <i class="iconfont icon-ui"></i>关于 </a>
+        </div>
+        <div class="nav-user">
+            <form action="http://cn.bing.com/search" class="fly-search">
+                <i class="iconfont icon-sousuo"></i> <input class="layui-input" autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q">
+            </form>
+            <p class="out-login">
+                <a class="iconfont icon-touxiang" href="/user/login/"></a>
+           </p>
+        </div>
+    </div>
+</div>
+<div class="main layui-clear">
+    <div class="wrap">
+        <div class="content detail">
+            <h1>{$post_title}</h1>
+            <div class="fly-tip fly-detail-hint" data-id="4281">
+                <if condition="$vo['istop']">
+                    <span class="fly-tip-stick">置顶</span>
+                </if>
+                <if condition="$vo['recommended']">
+                    <span class="fly-tip-jing">精帖</span>
+                </if>
+            </div>
+            <div class="fly-list-li">
+            <p>
+                <span><a href="/u/168">管理员</a></span>
+                <span>{$post_date}</span>
+                <span>{$term[$vo['term_id']].name}</span>
+                <span class="fly-list-hint">
+                    <i class="iconfont" title="回答">&#xe60c;</i> {$comment_count}
+                    <i class="iconfont" title="人气">&#xe60b;</i> {$post_hits}
+                </span>
+            </p>
+            </div>
+            <hr>
+            <div id="article_content">
+                {$post_content}
+            </div>
+            <div class="layui-form layui-form-pane">
+                {:hook('comment',array(
+                'post_id'=>$article_id,
+                'post_table'=>'posts',
+                'post_title'=>$post_title
+                ))}
+            </div>
+        </div>
+    </div>
+    <div class="edge"><h3 class="page-title">月度雷锋 - TOP 12</h3>
+        <div class="user-looklog leifeng-rank">
+            <span>
+                <a href="/u/26880">
+                    <img src="/avatar/26880.gif">
+                    <cite>小魔方</cite>
+                    <i>267次回答</i>
+                </a>
+                <a href="/u/168">
+                    <img src="/avatar/168.jpg">
+                    <cite>贤心</cite>
+                    <i>196次回答</i>
+                </a>
+                <a href="/u/11424">
+                    <img src="/avatar/11424.gif">
+                    <cite>SMALL</cite>
+                    <i>152次回答</i>
+                </a>
+               <a href="/u/26880">
+                    <img src="/avatar/26880.gif">
+                    <cite>小魔方</cite>
+                    <i>267次回答</i>
+                </a>
+                <a href="/u/168">
+                    <img src="/avatar/168.jpg">
+                    <cite>贤心</cite>
+                    <i>196次回答</i>
+                </a>
+                <a href="/u/11424">
+                    <img src="/avatar/11424.gif">
+                    <cite>SMALL</cite>
+                    <i>152次回答</i>
+                </a>
+            </span>
+        </div>
+        <div style="">
+            <script type="text/javascript">        /*336*280*/
+            var cpro_id = "u2482656";
+            </script>
+            <script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+        </div>
+        <php>
+            $hot_articles=sp_sql_posts("field:post_title,post_excerpt,post_hits,object_id,term_id,smeta;order:post_hits desc;limit:8;");
+        </php>
+        <h3 class="page-title">热门文章</h3>
+        <ol class="fly-list-one">
+            <foreach name="hot_articles" item="vo">
+                <li>
+                    <a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{$vo.post_title}</a>
+                    <span><i class="iconfont">&#xe60b;</i> {$vo.post_hits}</span>
+                </li>
+            </foreach>
+        </ol>
+        <h3 class="page-title">近期热议</h3>
+        <ol class="fly-list-one">
+            <php>$last_comments=sp_get_comments("field:*;limit:0,5;order:createtime desc;");</php>
+            <foreach name="last_comments" item="vo">
+                <li>
+                    <a href="__ROOT__/{$vo.url}#comment{$vo.id}">{$vo.content}</a>
+                    <span><i class="iconfont">&#xe60c;</i> 95</span>
+                </li>
+            </foreach>
+            <li>
+                <a href="/jie/5804.html">基于Layui的webos风格 向案例前十迈步</a>
+                <span><i class="iconfont">&#xe60c;</i> 46</span>
+            </li>
+            <li>
+                <a href="/jie/5795.html">全力冲刺 layui 2.0</a>
+                <span><i class="iconfont">&#xe60c;</i> 25</span>
+            </li>
+            <li>
+                <a href="/jie/5724.html">LayIM 3.0 专业版正式发布，年终之礼</a>
+                <span><i class="iconfont">&#xe60c;</i> 95</span>
+            </li>
+            <li>
+                <a href="/jie/5804.html">基于Layui的webos风格 向案例前十迈步</a>
+                <span><i class="iconfont">&#xe60c;</i> 46</span>
+            </li>
+            <li>
+                <a href="/jie/5795.html">全力冲刺 layui 2.0</a>
+                <span><i class="iconfont">&#xe60c;</i> 25</span>
+            </li>
+        </ol>
+        <div class="fly-link">
+            <span>友情链接：</span>
+            <a href="http://layim.layui.com/" target="_blank">LayIM</a>
+            <a href="http://layer.layui.com/" target="_blank">layer</a>
+            <a href="http://www.ttlutuan.com" target="_blank">天天撸团</a>
+            <a href="http://www.hotcn.top/" target="_blank">国际热点</a>
+            <a href="http://www.bejson.com/" target="_blank">JSON在线工具</a>
+            <a href="http://www.smeoa.com/" target="_blank">小微OA</a>
+            <a href="http://www.pmsun.me/" target="_blank">PHP博客</a>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>
+        <a href="http://fly.layui.com/">Fly社区</a> 2016 &copy;
+        <a href="http://www.layui.com/">layui.com</a>
+    </p>
+    <p>
+        <a href="http://fly.layui.com/jie/3147.html" target="_blank">产品授权</a>
+        <a href="http://fly.layui.com/jie/4536.html" target="_blank">获取Fly社区模版</a>
+        <a href="http://fly.layui.com/jie/2461.html" target="_blank">微信公众号</a>
+    </p>
+</div>
+<script src="__PUBLIC__/layui/layui.js"></script>
+<script>layui.cache.page = 'index';
+layui.cache.user = {
+    username: '游客',
+    uid: -1,
+    avatar: 'http://res.layui.com/images/fly/avatar/00.jpg',
+    experience: 0,
+    sum: 0,
+    vip: 0,
+    sex: ''
+};
+layui.config({version: "1481533561394"}).extend({'fly': 'http://res.layui.com/lay/modules/fly/index'}).use('fly');</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));</script>
+</body>
+</html>
