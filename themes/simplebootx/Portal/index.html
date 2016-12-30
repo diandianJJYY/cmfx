@@ -1,143 +1,177 @@
 <!DOCTYPE html>
-	<html>
-	<head>
-		<title>{$site_seo_title} {$site_name}</title>
-		<meta name="keywords" content="{$site_seo_keywords}" />
-		<meta name="description" content="{$site_seo_description}">
-		<tc_include file="Public:head" />
-		<link href="__TMPL__Public/assets/css/slippry/slippry.css" rel="stylesheet">
-		<style>
-			.caption-wraper{position: absolute;left:50%;bottom:2em;}
-			.caption-wraper .caption{
-			position: relative;left:-50%;
-			background-color: rgba(0, 0, 0, 0.54);
-			padding: 0.4em 1em;
-			color:#fff;
-			-webkit-border-radius: 1.2em;
-			-moz-border-radius: 1.2em;
-			-ms-border-radius: 1.2em;
-			-o-border-radius: 1.2em;
-			border-radius: 1.2em;
-			}
-			@media (max-width: 767px){
-				.sy-box{margin: 12px -20px 0 -20px;}
-				.caption-wraper{left:0;bottom: 0.4em;}
-				.caption-wraper .caption{
-				left: 0;
-				padding: 0.2em 0.4em;
-				font-size: 0.92em;
-				-webkit-border-radius: 0;
-				-moz-border-radius: 0;
-				-ms-border-radius: 0;
-				-o-border-radius: 0;
-				border-radius: 0;}
-			}
-		</style>
-	</head>
-<body class="body-white">
-<tc_include file="Public:nav" />
-
-<php>
-$home_slides=sp_getslide("portal_index");
-
-$home_slides=empty($home_slides)?$default_home_slides:$home_slides;
-</php>
-<ul id="homeslider" class="unstyled">
-	<foreach name="home_slides" item="vo">
-	<li>
-		<div class="caption-wraper">
-			<div class="caption">{$vo.slide_name}</div>
-		</div>
-		<a href="{$vo.slide_url}"><img src="{:sp_get_asset_upload_path($vo['slide_pic'])}" alt=""></a>
-	</li>
-	</foreach>
-</ul>
-<div class="container">
-	
-	<div>
-		<h1 class="text-center">快速了解ThinkCMF</h1>
-		<h3 class="text-center">Quickly understand the ThinkCMF</h3>
-	</div>
-	<div class="row">
-		<div class="span4">
-			 <h2 class="font-large nospace"><i class="fa fa-bars"></i> MVC分层模式</h2>
-             <p>使用MVC应用程序被分成三个核心部件：模型（M）、视图（V）、控制器（C），他不是一个新的概念，只是ThinkCMF将其发挥到了极致。</p>
-		</div>
-		<div class="span4">
-			 <h2 class="font-large nospace"><i class="fa fa-group"></i> 用户管理</h2>
-             <p>ThinkCMF内置了灵活的用户管理方式，并可直接与第三方站点进行互联互通，如果你愿意甚至可以对单个用户或群体用户的行为进行记录及分享，为您的运营决策提供有效参考数据。</p>
-		</div>
-		<div class="span4">
-			  <h2 class="font-large nospace"><i class="fa fa-cloud"></i> 云端部署</h2>
-              <p>通过驱动的方式可以轻松支持云平台的部署，让你的网站无缝迁移，内置已经支持SAE、BAE，正式版将对云端部署进行进一步优化。</p>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="span4">
-			 <h2 class="font-large nospace"><i class="fa fa-heart"></i> 安全策略</h2>
-             <p>提供的稳健的安全策略，包括备份恢复，容错，防治恶意攻击登陆，网页防篡改等多项安全管理功能，保证系统安全，可靠，稳定的运行。</p>
-		</div>
-		<div class="span4">
-			 <h2 class="font-large nospace"><i class="fa fa-cubes"></i> 应用模块化</h2>
-             <p>提出全新的应用模式进行扩展，不管是你开发一个小功能还是一个全新的站点，在ThinkCMF中你只是增加了一个APP，每个独立运行互不影响，便于灵活扩展和二次开发。</p>
-		</div>
-		<div class="span4">
-			  <h2 class="font-large nospace"><i class="fa fa-certificate"></i> 免费开源</h2>
-              <p>代码遵循Apache2开源协议，免费使用，对商业用户也无任何限制。</p>
-		</div>
-	</div>
-	
-	<div>
-		<h1 class="text-center">最新资讯</h1>
-		<h3 class="text-center">Last News</h3>
-	</div>
-	<php>
-		$lastnews=sp_sql_posts("cid:$portal_index_lastnews;field:post_title,post_excerpt,object_id,smeta,term_id;order:listorder asc;limit:4;"); 
-	</php>
-	<div class="row">
-		<foreach name="lastnews" item="vo">
-		<php>$smeta=json_decode($vo['smeta'],true);</php>
-		<div class="span3">
-			<div class="tc-gridbox">
-				<div class="header">
-					<div class="item-image">
-						<a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">
-							<if condition="empty($smeta['thumb'])"> 
-								<img src="__TMPL__Public/assets/images/default_tupian1.png" class="img-responsive" alt="{$vo.post_title}"/>
-							<else /> 
-								<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive img-thumbnail" alt="{$vo.post_title}" />
-							</if>
-						</a>
-					</div>
-					<h3><a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{$vo.post_title}</a></h3>
-					<hr>
-				</div>
-				<div class="body">
-					<p><a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{:msubstr($vo['post_excerpt'],0,32)}</a></p>
-				</div>
-			</div>
-		</div>
-		</foreach>
-	</div>
-<tc_include file="Public:footer"/>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta property="qc:admins" content="01676642316411516375"/>
+    <meta name="keywords" content="fly,layui,前端社区">
+    <meta name="description" content="Fly社区是跨设备模块化前端框架layui的官网社区，致力于为web开发提供强劲动力">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Fly - layui前端框架官方社区</title>
+    <tc_include file="Public:head" />
+</head>
+<body>
+<div class="header">
+    <tc_include file="Public:nav" />
 </div>
+<div class="main layui-clear">
+    <div class="wrap">
+        <div class="content">
+            <!--<div class="fly-tab">-->
+                <!--<span>-->
+                    <!--<a href="/jie/">全部</a>-->
+                    <!--<a href="/jie/unsolved/">未结帖</a>-->
+                    <!--<a href="/jie/solved/">已采纳</a>-->
+                    <!--<a href="/jie/wonderful/">精帖</a>-->
+                <!--</span>-->
+                <!--<form action="http://cn.bing.com/search" class="fly-search">-->
+                    <!--<i class="iconfont icon-sousuo"></i> <input class="layui-input" autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q">-->
+                <!--</form>-->
+                <!--<a href="/jie/add/" class="layui-btn jie-add">发布问题</a>-->
+            <!--</div>-->
+            <php>
+                $lists = sp_sql_posts_paged("cid:$cat_id;order:post_date DESC;",10);
+            </php>
 
-<tc_include file="Public:scripts"/>
-<script src="__TMPL__Public/assets/js/slippry.min.js"></script>
-<script>
-$(function() {
-	var demo1 = $("#homeslider").slippry({
-		transition: 'fade',
-		useCSS: true,
-		captions: false,
-		speed: 1000,
-		pause: 3000,
-		auto: true,
-		preload: 'visible'
-	});
-});
-</script>
-{:hook('footer_end')}
+            <ul class="fly-list">
+                <volist name="lists['posts']" id="vo">
+                    <php>
+                        $smeta=json_decode($vo['smeta'], true);
+                    </php>
+                    <li class="fly-list-li">
+                        <h2 class="fly-tip"><a  href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" target="_blank">{$vo.post_title}</a>
+                            <if condition="$vo['istop']">
+                            <span class="fly-tip-stick">置顶</span>
+                            </if>
+                            <if condition="$vo['recommended']">
+                            <span class="fly-tip-jing">精帖</span>
+                            </if>
+                        </h2>
+                        <p>
+                            <span><a href="/u/168">管理员</a></span>
+                            <span>{$vo.post_date}</span>
+                            <span>{$term[$vo['term_id']].name}</span>
+                            <span class="fly-list-hint">
+                                <i class="iconfont" title="回答">&#xe60c;</i> {$vo.comment_count}
+                                <i class="iconfont" title="人气">&#xe60b;</i> {$vo.post_hits}
+                            </span>
+                        </p>
+                        <div class="liu-article-img">
+                            <a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" class="fly-list-pic">
+                                <if condition="empty($smeta['thumb'])">
+                                    <img src="__PUBLIC__/images/default_article.png" class="img-responsive" alt="{$vo.post_title}"/>
+                                    <else />
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive img-thumbnail" alt="{$vo.post_title}" />
+                                </if>
+                            </a>
+                        </div>
+                        <div class="liu-article-beginning">{:strip_tags(substr($vo['post_content'],0,1022))}</div>
+                    </li>
+                </volist>
+            </ul>
+            <div class="layui-box layui-laypage layui-laypage-default liu-page"><ul>{$lists['page']}</ul></div>
+        </div>
+    </div>
+    <div class="edge"><h3 class="page-title">月度雷锋 - TOP 12</h3>
+        <div class="user-looklog leifeng-rank">
+            <span>
+                <a href="/u/26880">
+                    <img src="/avatar/26880.gif">
+                    <cite>小魔方</cite>
+                    <i>267次回答</i>
+                </a>
+                <a href="/u/168">
+                    <img src="/avatar/168.jpg">
+                    <cite>贤心</cite>
+                    <i>196次回答</i>
+                </a>
+                <a href="/u/11424">
+                    <img src="/avatar/11424.gif">
+                    <cite>SMALL</cite>
+                    <i>152次回答</i>
+                </a>
+               <a href="/u/26880">
+                    <img src="/avatar/26880.gif">
+                    <cite>小魔方</cite>
+                    <i>267次回答</i>
+                </a>
+                <a href="/u/168">
+                    <img src="/avatar/168.jpg">
+                    <cite>贤心</cite>
+                    <i>196次回答</i>
+                </a>
+                <a href="/u/11424">
+                    <img src="/avatar/11424.gif">
+                    <cite>SMALL</cite>
+                    <i>152次回答</i>
+                </a>
+            </span>
+        </div>
+        <div style="">
+            <script type="text/javascript">        /*336*280*/
+            var cpro_id = "u2482656";
+            </script>
+            <script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+        </div>
+        <php>
+            $hot_articles=sp_sql_posts("field:post_title,post_excerpt,post_hits,object_id,term_id,smeta;order:post_hits desc;limit:8;");
+        </php>
+        <h3 class="page-title">热门文章</h3>
+        <ol class="fly-list-one">
+            <foreach name="hot_articles" item="vo">
+                <li>
+                    <a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{$vo.post_title}</a>
+                    <span><i class="iconfont">&#xe60b;</i> {$vo.post_hits}</span>
+                </li>
+            </foreach>
+        </ol>
+        <h3 class="page-title">最新评论</h3>
+        <div>
+            <php>$last_comments=sp_get_comments("field:*;limit:0,5;order:createtime desc;");</php>
+            <foreach name="last_comments" item="vo">
+                <ul class="liu-new-comment">
+                    <img alt="" src="{:U('user/public/avatar',array('id'=>$vo['uid']))}" class="">
+                    <li class="liu-user-name">
+                        {$vo.full_name}
+                    </li>
+                    <li class="liu-post-title">
+                        在<a href="__ROOT__/{$vo.url}#comment{$vo.id}">{$vo.post_title|msubstr=0,15}</a>中评论：
+                    </li>
+                    <li class="liu-content">
+                        {$vo.content}
+                    </li>
+                </ul>
+            </foreach>
+        </div>
+        <div class="fly-link">
+            <span>友情链接：</span>
+            <div class="links">
+                <php>$links=sp_getlinks();</php>
+                <foreach name="links" item="vo">
+                    <notempty name="vo.link_image">
+                        <!-- <img src="{:sp_get_image_url($vo['link_image'])}"> --><!-- 如果想加个友链图片可以取消注释 -->
+                    </notempty>
+                    <a href="{$vo.link_url}" target="{$vo.link_target}">{$vo.link_name}</a>
+                </foreach>
+            </div>
+        </div>
+    </div>
+</div>
+<tc_include file="Public:footer"/>
+<script src="__PUBLIC__/layui/layui.js"></script>
+<script>layui.cache.page = 'index';
+layui.cache.user = {
+    username: '游客',
+    uid: -1,
+    avatar: 'http://res.layui.com/images/fly/avatar/00.jpg',
+    experience: 0,
+    sum: 0,
+    vip: 0,
+    sex: ''
+};
+layui.config({version: "1481533561394"}).extend({'fly': 'http://res.layui.com/lay/modules/fly/index'}).use('fly');</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));</script>
 </body>
 </html>
