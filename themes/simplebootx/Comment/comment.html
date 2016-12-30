@@ -90,6 +90,7 @@ layui.use('form', function(){
         var $this = $(this);
         var $comment_form = $this.parents().find('.comment-form');
         var comment_url = $comment_form.attr("action");
+        data.field.url = encodeURIComponent(location.href);
         $.post(comment_url,data.field,function(res){
             layer.closeAll('loading');
             if(res.status==0){

@@ -50,7 +50,7 @@
                 <!--<a href="/jie/add/" class="layui-btn jie-add">发布问题</a>-->
             <!--</div>-->
             <php>
-                $lists = sp_sql_posts_paged("cid:$cat_id;order:post_date DESC;",2);
+                $lists = sp_sql_posts_paged("cid:$cat_id;order:post_date DESC;",10);
             </php>
 
             <ul class="fly-list">
@@ -59,7 +59,7 @@
                         $smeta=json_decode($vo['smeta'], true);
                     </php>
                     <li class="fly-list-li">
-                        <h2 class="fly-tip"><a  href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{$vo.post_title}</a>
+                        <h2 class="fly-tip"><a  href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" target="_blank">{$vo.post_title}</a>
                             <if condition="$vo['istop']">
                             <span class="fly-tip-stick">置顶</span>
                             </if>
@@ -145,45 +145,35 @@
                 </li>
             </foreach>
         </ol>
-        <h3 class="page-title">近期热议</h3>
-        <ol class="fly-list-one">
+        <h3 class="page-title">最新评论</h3>
+        <div>
             <php>$last_comments=sp_get_comments("field:*;limit:0,5;order:createtime desc;");</php>
             <foreach name="last_comments" item="vo">
-                <li>
-                    <a href="__ROOT__/{$vo.url}#comment{$vo.id}">{$vo.content}</a>
-                    <span><i class="iconfont">&#xe60c;</i> 95</span>
-                </li>
+                <ul class="liu-new-comment">
+                    <img alt="" src="{:U('user/public/avatar',array('id'=>$vo['uid']))}" class="">
+                    <li class="liu-user-name">
+                        {$vo.full_name}
+                    </li>
+                    <li class="liu-post-title">
+                        在<a href="__ROOT__/{$vo.url}#comment{$vo.id}">{$vo.post_title|msubstr=0,15}</a>中评论：
+                    </li>
+                    <li class="liu-content">
+                        {$vo.content}
+                    </li>
+                </ul>
             </foreach>
-            <li>
-                <a href="/jie/5804.html">基于Layui的webos风格 向案例前十迈步</a>
-                <span><i class="iconfont">&#xe60c;</i> 46</span>
-            </li>
-            <li>
-                <a href="/jie/5795.html">全力冲刺 layui 2.0</a>
-                <span><i class="iconfont">&#xe60c;</i> 25</span>
-            </li>
-            <li>
-                <a href="/jie/5724.html">LayIM 3.0 专业版正式发布，年终之礼</a>
-                <span><i class="iconfont">&#xe60c;</i> 95</span>
-            </li>
-            <li>
-                <a href="/jie/5804.html">基于Layui的webos风格 向案例前十迈步</a>
-                <span><i class="iconfont">&#xe60c;</i> 46</span>
-            </li>
-            <li>
-                <a href="/jie/5795.html">全力冲刺 layui 2.0</a>
-                <span><i class="iconfont">&#xe60c;</i> 25</span>
-            </li>
-        </ol>
+        </div>
         <div class="fly-link">
             <span>友情链接：</span>
-            <a href="http://layim.layui.com/" target="_blank">LayIM</a>
-            <a href="http://layer.layui.com/" target="_blank">layer</a>
-            <a href="http://www.ttlutuan.com" target="_blank">天天撸团</a>
-            <a href="http://www.hotcn.top/" target="_blank">国际热点</a>
-            <a href="http://www.bejson.com/" target="_blank">JSON在线工具</a>
-            <a href="http://www.smeoa.com/" target="_blank">小微OA</a>
-            <a href="http://www.pmsun.me/" target="_blank">PHP博客</a>
+            <div class="links">
+                <php>$links=sp_getlinks();</php>
+                <foreach name="links" item="vo">
+                    <notempty name="vo.link_image">
+                        <!-- <img src="{:sp_get_image_url($vo['link_image'])}"> --><!-- 如果想加个友链图片可以取消注释 -->
+                    </notempty>
+                    <a href="{$vo.link_url}" target="{$vo.link_target}">{$vo.link_name}</a>
+                </foreach>
+            </div>
         </div>
     </div>
 </div>

@@ -1057,6 +1057,9 @@ function sp_get_comments($tag="field:*;limit:0,5;order:createtime desc;",$where=
 	$comments_model=M("Comments");
 
 	$comments=$comments_model->field($field)->where($where)->order($order)->limit($limit)->select();
+    foreach($comments as &$comment){
+        $comment['post_title'] = M("posts")->where(['id'=>$comment['post_id']])->getField('post_title');
+    }
 	return $comments;
 }
 

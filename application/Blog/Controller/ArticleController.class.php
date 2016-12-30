@@ -47,21 +47,20 @@ class ArticleController extends HomebaseController {
     	$join2= '__USERS__ as c on b.post_author = c.id';
     	
     	$term_relationships_model= M("TermRelationships");
-    	
-    	$next=$term_relationships_model
+
+        $prev=$term_relationships_model
     	->alias("a")
     	->join($join)->join($join2)
     	->where(array('b.id'=>array('gt',$article_id),"post_date"=>array("egt",$article_date),"a.status"=>1,'a.term_id'=>$term_id,'post_status'=>1))
     	->order("post_date asc,b.id asc")
     	->find();
-    	
-    	$prev=$term_relationships_model
+
+        $next=$term_relationships_model
     	->alias("a")
     	->join($join)->join($join2)
     	->where(array('b.id'=>array('lt',$article_id),"post_date"=>array("elt",$article_date),"a.status"=>1,'a.term_id'=>$term_id,'post_status'=>1))
     	->order("post_date desc,b.id desc")
     	->find();
-    	
     	$this->assign("next",$next);
     	$this->assign("prev",$prev);
     	
