@@ -72,6 +72,7 @@ class ApiService {
     	    ->where($where)
     	    ->order($order)
     	    ->limit($limit)
+            ->group('posts.id')
     	    ->select();
     	}else{
     	    $pagetpl = empty($pagetpl) ? '{first}{prev}{liststart}{list}{listend}{next}{last}' : $pagetpl;
@@ -81,7 +82,9 @@ class ApiService {
     	    ->join($join2)
     	    ->field($field)
     	    ->where($where)
-    	    ->count();
+            ->group('posts.id')
+    	    ->select();
+            $totalsize = sizeof($totalsize);
     	    
     	    $pagesize = intval($pagesize);
     	    $page_param = C("VAR_PAGE");
@@ -103,6 +106,7 @@ class ApiService {
     	    ->where($where)
     	    ->order($order)
     	    ->limit($page->firstRow, $page->listRows)
+            ->group('posts.id')
     	    ->select();
     	    
     	    $content['page']=$page->show('default');
@@ -260,7 +264,7 @@ class ApiService {
      */
     public static function postsPagedByKeyword($keyword,$tag,$pagesize=20,$pagetpl=''){
         $where=array();
-        $where['posts.post_title'] = array('like',"%$keyword%");
+        $where['posts.post_title|posts.post_keywords'] = array('like',"%$keyword%");
         
         $content=self::posts($tag,$where,$pagesize,$pagetpl);
         

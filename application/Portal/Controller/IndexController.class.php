@@ -8,7 +8,7 @@ class IndexController extends HomebaseController {
 
     // 前台文章列表
     public function index() {
-        $term_id=I('get.id',1,'intval');
+        $term_id=I('get.id',0,'intval');
 
         if($term_id){
             $term=sp_get_term($term_id);
@@ -39,7 +39,7 @@ class IndexController extends HomebaseController {
         $tplname=sp_get_apphome_tpl($tplname, "index");
         $this->assign('term',$term);
         $this->assign('cat_id', $term_id);
-        $this->display(":index");
+        $this->display(":$tplname");
     }
 
     // 文章分类列表接口,返回文章分类列表,用于后台导航编辑添加

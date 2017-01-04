@@ -12,9 +12,7 @@
     <tc_include file="Public:head" />
 </head>
 <body>
-<div class="header">
-    <tc_include file="Public:nav" />
-</div>
+<tc_include file="Public:nav" />
 <div class="main layui-clear">
     <div class="wrap">
         <div class="content">
@@ -41,12 +39,12 @@
                     </php>
                     <li class="fly-list-li">
                         <h2 class="fly-tip"><a  href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" target="_blank">{$vo.post_title}</a>
-                            <if condition="$vo['istop']">
-                            <span class="fly-tip-stick">置顶</span>
-                            </if>
-                            <if condition="$vo['recommended']">
-                            <span class="fly-tip-jing">精帖</span>
-                            </if>
+                            <!--<if condition="$vo['istop']">-->
+                            <!--<span class="fly-tip-stick">置顶</span>-->
+                            <!--</if>-->
+                            <!--<if condition="$vo['recommended']">-->
+                            <!--<span class="fly-tip-jing">精帖</span>-->
+                            <!--</if>-->
                         </h2>
                         <p>
                             <span><a href="/u/168">管理员</a></span>
@@ -67,46 +65,22 @@
                             </a>
                         </div>
                         <div class="liu-article-beginning">{:strip_tags(substr($vo['post_content'],0,1022))}</div>
+                        <a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" class="liu-readall" target="_blank">阅读全文</a>
                     </li>
                 </volist>
             </ul>
             <div class="layui-box layui-laypage layui-laypage-default liu-page"><ul>{$lists['page']}</ul></div>
         </div>
     </div>
-    <div class="edge"><h3 class="page-title">月度雷锋 - TOP 12</h3>
-        <div class="user-looklog leifeng-rank">
-            <span>
-                <a href="/u/26880">
-                    <img src="/avatar/26880.gif">
-                    <cite>小魔方</cite>
-                    <i>267次回答</i>
-                </a>
-                <a href="/u/168">
-                    <img src="/avatar/168.jpg">
-                    <cite>贤心</cite>
-                    <i>196次回答</i>
-                </a>
-                <a href="/u/11424">
-                    <img src="/avatar/11424.gif">
-                    <cite>SMALL</cite>
-                    <i>152次回答</i>
-                </a>
-               <a href="/u/26880">
-                    <img src="/avatar/26880.gif">
-                    <cite>小魔方</cite>
-                    <i>267次回答</i>
-                </a>
-                <a href="/u/168">
-                    <img src="/avatar/168.jpg">
-                    <cite>贤心</cite>
-                    <i>196次回答</i>
-                </a>
-                <a href="/u/11424">
-                    <img src="/avatar/11424.gif">
-                    <cite>SMALL</cite>
-                    <i>152次回答</i>
-                </a>
-            </span>
+    <div class="edge"><h3 class="page-title">标签云</h3>
+        <div class="liu-tags">
+            <php>
+                $keywords = _sp_sql_keywords_bypostcatid();
+                $class_arr = array('','layui-btn-warm','layui-btn-danger','layui-btn-normal');
+            </php>
+             <volist name="keywords[0]" id="vo">
+                 <a href="#" class="layui-btn layui-btn-small {$class_arr[(($i-1)%4)]}">{$key}（{$vo}）</a>
+             </volist>
         </div>
         <div style="">
             <script type="text/javascript">        /*336*280*/

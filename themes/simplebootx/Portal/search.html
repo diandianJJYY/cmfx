@@ -8,80 +8,120 @@
 	</head>
 <body class="">
 <tc_include file="Public:nav" />
-<div class="container tc-main">
-	<div class="row">
-		<div class="span9">
-			<div class="main-title">
+<div class="main layui-clear">
+	<div class="wrap">
+		<div class="content">
+			<div class="liu-search-title">
 				<php>
 					$result=sp_sql_posts_paged_bykeyword($keyword,"",20);
 				</php>
-				<h3>'{$keyword}' 搜索结果 </h3>
-				<p>{$result['count']}条结果</p>
+				<h2>搜索到与'<span style="color: #FF5722">{$keyword}</span>' 相关的文章 </h2>
 			</div>
-			
-			<volist name="result['posts']" id="vo">
 			<php>
-				$smeta=json_decode($vo['smeta'], true);
+				$lists = sp_sql_posts_paged("cid:$cat_id;order:post_date DESC;",10);
 			</php>
-			
-			<div class="list-boxes">
-				<h2><a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{$vo.post_title}</a></h2>
-				<p>{$vo.post_excerpt}</p>
-				<div>
-					<div class="pull-left">
-						<div class="list-actions">
-						<a href="javascript:;"><i class="fa fa-eye"></i><span>{$vo.post_hits}</span></a>
-						<a href="{:U('article/do_like',array('id'=>$vo['object_id']))}" class="js-count-btn"><i class="fa fa-thumbs-up"></i><span class="count">{$vo.post_like}</span></a>
-						<a href="{:U('user/favorite/do_favorite',array('id'=>$vo['object_id']))}" class="js-favorite-btn" data-title="{$vo.post_title}" data-url="{:U('portal/article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" data-key="{:sp_get_favorite_key('posts',$vo['object_id'])}">
-							<i class="fa fa-star-o"></i>
-						</a>
-						</div>
-					</div>
-					<a class="btn btn-warning pull-right" href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">查看更多</a>
-				</div>
-			</div>
-			</volist>
-		
-			<div class="pagination">
-					<ul>
-						{$result['page']}
-					</ul>
-			</div>
 
-		</div>
-		<div class="span3">
-			<div class="tc-box first-box">
-				<div class="headtitle">
-	          		<h2>分享</h2>
-	          	</div>
-	          	<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a></div>
-<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"32"},"share":{},"image":{"viewList":["weixin","tsina","qzone","tqq","renren"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["weixin","tsina","qzone","tqq","renren"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-        	</div>
-        	
-        	<div class="tc-box">
-	        	<div class="headtitle">
-	        		<h2>热门文章</h2>
-	        	</div>
-	        	<div class="ranking">
-	        		<php>
-						$hot_articles=sp_sql_posts("cid:$portal_index_lastnews;field:post_title,post_excerpt,object_id,term_id,smeta;order:post_hits desc;limit:5;"); 
+			<ul class="fly-list">
+				<volist name="result['posts']" id="vo">
+					<php>
+						$smeta=json_decode($vo['smeta'], true);
 					</php>
-		        	<ul class="unstyled">
-		        		<foreach name="hot_articles" item="vo">
-		        			<php>$top=$key<3?"top3":"";</php>
-							<li class="{$top}"><i>{$key+1}</i><a title="{$vo.post_title}" href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{$vo.post_title}</a></li>
-						</foreach>
-					</ul>
-				</div>
-			</div>
-        	
+					<li class="fly-list-li">
+						<h2 class="fly-tip"><a  href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" target="_blank">{$vo.post_title}</a>
+							<!--<if condition="$vo['istop']">-->
+							<!--<span class="fly-tip-stick">置顶</span>-->
+							<!--</if>-->
+							<!--<if condition="$vo['recommended']">-->
+							<!--<span class="fly-tip-jing">精帖</span>-->
+							<!--</if>-->
+						</h2>
+						<p>
+							<span><a href="/u/168">管理员</a></span>
+							<span>{$vo.post_date}</span>
+							<span>{$term[$vo['term_id']].name}</span>
+							<span class="fly-list-hint">
+                                <i class="iconfont" title="回答">&#xe60c;</i> {$vo.comment_count}
+                                <i class="iconfont" title="人气">&#xe60b;</i> {$vo.post_hits}
+                            </span>
+						</p>
+						<div class="liu-article-img">
+							<a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" class="fly-list-pic">
+								<if condition="empty($smeta['thumb'])">
+									<img src="__PUBLIC__/images/default_article.png" class="img-responsive" alt="{$vo.post_title}"/>
+									<else />
+									<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive img-thumbnail" alt="{$vo.post_title}" />
+								</if>
+							</a>
+						</div>
+						<div class="liu-article-beginning">{:strip_tags(substr($vo['post_content'],0,1022))}</div>
+						<a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" class="liu-readall" target="_blank">阅读全文</a>
+					</li>
+				</volist>
+			</ul>
+			<div class="layui-box layui-laypage layui-laypage-default liu-page"><ul>{$result['page']}</ul></div>
 		</div>
-		
 	</div>
-              
-<tc_include file="Public:footer"/>
+	<div class="edge"><h3 class="page-title">标签云</h3>
+		<div class="liu-tags">
+			<php>
+				$keywords = _sp_sql_keywords_bypostcatid();
+				$class_arr = array('','layui-btn-warm','layui-btn-danger','layui-btn-normal');
+			</php>
+			<volist name="keywords[0]" id="vo">
+				<a href="#" class="layui-btn layui-btn-small {$class_arr[(($i-1)%4)]}">{$key}（{$vo}）</a>
+			</volist>
+		</div>
+		<div style="">
+			<script type="text/javascript">        /*336*280*/
+			var cpro_id = "u2482656";
+			</script>
+			<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+		</div>
+		<php>
+			$hot_articles=sp_sql_posts("field:post_title,post_excerpt,post_hits,object_id,term_id,smeta;order:post_hits desc;limit:8;");
+		</php>
+		<h3 class="page-title">热门文章</h3>
+		<ol class="fly-list-one">
+			<foreach name="hot_articles" item="vo">
+				<li>
+					<a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{$vo.post_title}</a>
+					<span><i class="iconfont">&#xe60b;</i> {$vo.post_hits}</span>
+				</li>
+			</foreach>
+		</ol>
+		<h3 class="page-title">最新评论</h3>
+		<div>
+			<php>$last_comments=sp_get_comments("field:*;limit:0,5;order:createtime desc;");</php>
+			<foreach name="last_comments" item="vo">
+				<ul class="liu-new-comment">
+					<img alt="" src="{:U('user/public/avatar',array('id'=>$vo['uid']))}" class="">
+					<li class="liu-user-name">
+						{$vo.full_name}
+					</li>
+					<li class="liu-post-title">
+						在<a href="__ROOT__/{$vo.url}#comment{$vo.id}">{$vo.post_title|msubstr=0,15}</a>中评论：
+					</li>
+					<li class="liu-content">
+						{$vo.content}
+					</li>
+				</ul>
+			</foreach>
+		</div>
+		<div class="fly-link">
+			<span>友情链接：</span>
+			<div class="links">
+				<php>$links=sp_getlinks();</php>
+				<foreach name="links" item="vo">
+					<notempty name="vo.link_image">
+						<!-- <img src="{:sp_get_image_url($vo['link_image'])}"> --><!-- 如果想加个友链图片可以取消注释 -->
+					</notempty>
+					<a href="{$vo.link_url}" target="{$vo.link_target}">{$vo.link_name}</a>
+				</foreach>
+			</div>
+		</div>
+	</div>
 </div>
-
+<tc_include file="Public:footer"/>
 <tc_include file="Public:scripts"/>
 </body>
 </html>

@@ -2165,3 +2165,54 @@ function sp_mobile_code_log($mobile,$code,$expire_time){
     
     return $result;
 }
+
+/*获取对应分类下所有子分类和文章的关键词，全站这分类ID为0即可； */
+/*$cid, 分类id */
+/*$splitChar,分隔符 */
+/*$topCount,获取关键词数量 */
+/*返回 */
+/*关键词数组及关联文章数量 */
+
+function _sp_sql_keywords_bypostcatid($cid = 0,$splitChar = ',',$topCount = 10){
+    $catIDS=array();
+    $terms=M("Terms")->field("term_id")->where("status=1 and term_id=$cid or path like '%-$cid-%'")->order('term_id asc')->select();
+    foreach($terms as $item){
+        $catIDS[]=$item['term_id'];
+    }
+    if(!empty($catIDS)){
+        $catIDS=implode(",", $catIDS);
+        $catIDS="cid:$catIDS;";
+    }else{
+        $catIDS="";
+    }
+    $posts= sp_sql_posts($catIDS);
+    $keywords=array();
+
+    foreach( $posts as $post)
+    {
+        $tags=explode($splitChar,$post['post_keywords']);
+        $tagarrlength=count($tags);
+        $keywordsarrlength=count($keywords);
+        for($x=0 ; $x < $tagarrlength ;$x++ )
+        {
+            $haskeywords=false;
+            foreach($keywords as $w=>$w_value)
+            {
+                if($tags[$x]==$w){
+                    $haskeywords=true;
+                    $keywords[$w]=$w_value+1;
+                    break;}
+            }
+            if($haskeywords==false and trim($tags[$x])!=""){ $keywords[trim($tags[$x])]=1;}
+        }
+    }
+    arsort($keywords);//降序排序
+    $keywordsarrlength=count($keywords);
+    if($keywordsarrlength > $topCount){
+        $keywords=array_slice($keywords,0,$topCount);
+    }
+    $max=max(array_values($keywords));//max关键词收录的次数
+    $min=min(array_values($keywords));//min关键词收录的次数
+    ksort($keywords);
+    return array($keywords,$max,$min);
+}

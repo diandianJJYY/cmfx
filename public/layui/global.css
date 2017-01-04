@@ -331,7 +331,7 @@ body .leifeng-rank span a img{width: 78px; height: 78px; border-radius: 2px;}
 .fly-list-li h2 a{max-width: 86%; margin-right: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 24px;}
 .fly-list-li h2 span{position: relative; top: 3px; margin-left: 5px;}
 
-.fly-list-li a:hover{color: #009E94; text-shadow: 1px 1px 0 rgba(0,0,0,.1);}
+.fly-list-li .fly-tip a:hover{color: #009E94; text-shadow: 1px 1px 0 rgba(0,0,0,.1);}
 .fly-list-li p{position: relative; line-height: 25px; margin:10px 10px; font-size: 14px; color: #999;}
 .fly-list-li p span{padding-right: 15px;}
 .fly-list-li p span a{color: #999;}
@@ -539,4 +539,53 @@ body .leifeng-rank span a img{width: 78px; height: 78px; border-radius: 2px;}
   top: 5px;
   padding-right: 8px;
   font-size: 26px;
+}
+
+.liu-readall {
+  padding: 0 10px;
+  position: absolute;
+  right: 15px;
+  bottom: 30px;
+  color: #fff;
+  border-radius: 10px;
+  background: #009E94;
+}
+
+.liu-readall:hover{
+  background: #01887f;
+  color: #fff;
+}
+
+.liu-tags{
+  padding: 10px;
+  min-height: 150px;
+}
+
+.liu-tags a{
+  height: 23px;
+  line-height: 23px;
+  padding: 0 8px;
+  cursor:pointer;
+  -webkit-transition: 0.8s;
+  -moz-transition: 0.8s;
+  -o-transition: 0.8s;
+  transition: 0.8s;
+}
+.liu-tags a:hover{
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.liu-search-title{
+  padding-left:10px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 5px 1px #E2E2E2;
+}
+.liu-search-title h2{
+  font-size: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  overflow-y: hidden;
 }
