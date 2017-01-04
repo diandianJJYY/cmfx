@@ -68,7 +68,7 @@
 				$class_arr = array('','layui-btn-warm','layui-btn-danger','layui-btn-normal');
 			</php>
 			<volist name="keywords[0]" id="vo">
-				<a href="#" class="layui-btn layui-btn-small {$class_arr[(($i-1)%4)]}">{$key}（{$vo}）</a>
+				<a href="javascript:;" class="tags layui-btn layui-btn-small {$class_arr[(($i-1)%4)]}" name="{$key}">{$key}（{$vo}）</a>
 			</volist>
 		</div>
 		<div style="">

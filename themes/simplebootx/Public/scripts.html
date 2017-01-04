@@ -5,6 +5,9 @@ var GV = {
     WEB_ROOT: "__WEB_ROOT__/",
     JS_ROOT: "public/js/"
 };
+layui.use('layer', function() {
+   var layer = layui.layer;
+});
 </script>
    <!-- Placed at the end of the document so the pages load faster -->
    <script src="__PUBLIC__/js/jquery.js"></script>
@@ -73,5 +76,20 @@ $(function(){
 	
 	
 });
+</script>
+
+<!-- 点击标签云搜索 -->
+<script>
+   $(".tags").click(function () {
+      var $this = $(this);
+      var $form = $("form");
+      var keyword = $.trim($this.attr('name'));
+      if(keyword == '') {
+         layer.msg('关键词不能为空，请重新输入！');
+         return;
+      }
+      $(".nav-search").val(keyword);
+      $form.submit();
+   });
 </script>
 

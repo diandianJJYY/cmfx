@@ -79,7 +79,7 @@
                 $class_arr = array('','layui-btn-warm','layui-btn-danger','layui-btn-normal');
             </php>
              <volist name="keywords[0]" id="vo">
-                 <a href="#" class="layui-btn layui-btn-small {$class_arr[(($i-1)%4)]}">{$key}（{$vo}）</a>
+                 <a href="javascript:;" class="tags layui-btn layui-btn-small {$class_arr[(($i-1)%4)]}" name="{$key}">{$key}（{$vo}）</a>
              </volist>
         </div>
         <div style="">
@@ -133,7 +133,9 @@
     </div>
 </div>
 <tc_include file="Public:footer"/>
+<tc_include file="Public:scripts" />
 <script src="__PUBLIC__/layui/layui.js"></script>
+
 <script>layui.cache.page = 'index';
 layui.cache.user = {
     username: '游客',
@@ -144,7 +146,8 @@ layui.cache.user = {
     vip: 0,
     sex: ''
 };
-layui.config({version: "1481533561394"}).extend({'fly': 'http://res.layui.com/lay/modules/fly/index'}).use('fly');</script>
+layui.config({version: "1481533561394"}).extend({'fly': 'http://res.layui.com/lay/modules/fly/index'}).use('fly');
+</script>
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));</script>
 </body>

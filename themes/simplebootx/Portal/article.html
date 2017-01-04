@@ -58,40 +58,15 @@
             </div>
         </div>
     </div>
-    <div class="edge"><h3 class="page-title">月度雷锋 - TOP 12</h3>
-        <div class="user-looklog leifeng-rank">
-            <span>
-                <a href="/u/26880">
-                    <img src="/avatar/26880.gif">
-                    <cite>小魔方</cite>
-                    <i>267次回答</i>
-                </a>
-                <a href="/u/168">
-                    <img src="/avatar/168.jpg">
-                    <cite>贤心</cite>
-                    <i>196次回答</i>
-                </a>
-                <a href="/u/11424">
-                    <img src="/avatar/11424.gif">
-                    <cite>SMALL</cite>
-                    <i>152次回答</i>
-                </a>
-               <a href="/u/26880">
-                    <img src="/avatar/26880.gif">
-                    <cite>小魔方</cite>
-                    <i>267次回答</i>
-                </a>
-                <a href="/u/168">
-                    <img src="/avatar/168.jpg">
-                    <cite>贤心</cite>
-                    <i>196次回答</i>
-                </a>
-                <a href="/u/11424">
-                    <img src="/avatar/11424.gif">
-                    <cite>SMALL</cite>
-                    <i>152次回答</i>
-                </a>
-            </span>
+    <div class="edge"><h3 class="page-title">标签云</h3>
+        <div class="liu-tags">
+            <php>
+                $keywords = _sp_sql_keywords_bypostcatid();
+                $class_arr = array('','layui-btn-warm','layui-btn-danger','layui-btn-normal');
+            </php>
+            <volist name="keywords[0]" id="vo">
+                <a href="javascript:;" class="tags layui-btn layui-btn-small {$class_arr[(($i-1)%4)]}" name="{$key}">{$key}（{$vo}）</a>
+            </volist>
         </div>
         <div style="">
             <script type="text/javascript">        /*336*280*/
@@ -144,6 +119,6 @@
     </div>
 </div>
 <tc_include file="Public:footer"/>
-
+<tc_include file="Public:scripts" />
 </body>
 </html>
