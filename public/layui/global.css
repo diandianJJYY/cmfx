@@ -335,6 +335,7 @@ body .leifeng-rank span a img{width: 78px; height: 78px; border-radius: 2px;}
 .fly-list-li p{position: relative; line-height: 25px; margin:10px 10px; font-size: 14px; color: #999;}
 .fly-list-li p span{padding-right: 15px;}
 .fly-list-li p span a{color: #999;}
+.fly-list-li p span a:hover{color: #009E94}
 .fly-list-pic img{width: 220px; height: 150px; border-radius: 2px;vertical-align: middle;transition: all 0.8s ease-in-out;}
 .fly-list-pic img:hover{transform: scale(1.2) rotate(2deg);}
 .fly-list-hint{position: absolute; right: 0; top: 0;}
@@ -589,3 +590,55 @@ body .leifeng-rank span a img{width: 78px; height: 78px; border-radius: 2px;}
   padding-bottom: 20px;
   overflow-y: hidden;
 }
+
+.layui-flow-more{
+    clear: both;
+}
+
+.container {
+    width: 1080px;
+    margin: 0 auto;
+}
+
+#container .grid-sizer, #container .item {
+    width: 23%;
+    margin: 10px 1%;
+    float: left;
+    zoom: 1;
+}
+
+.container .tc-gridbox {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    border-top: solid 1px  #efeeef;
+    background: #fff;
+    cursor: pointer;
+}
+
+.container .tc-gridbox .header1{
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    text-align: center;
+    background: #fff;
+}
+
+.liu-item {
+    border-color: #e4e4e4 #bebebd #bebebd #e4e4e4;
+    box-shadow: 3px 3px 3px 0 #d0d0d0;
+}
+.list-masonry-header a:hover{
+    color: #009E94;
+}
+.list-masonry-header h3{
+    font-size: 14px;
+    padding: 5px 5px;
+}
+.liu-img-responsive{
+  width: 100%;
+}
+.list-masonry-footer{
+    margin: 10px 5px;
+}
+

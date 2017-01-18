@@ -49,7 +49,14 @@
                         <p>
                             <span><a href="/u/168">管理员</a></span>
                             <span>{$vo.post_date}</span>
-                            <span>{$term[$vo['term_id']].name}</span>
+                            <php>
+                                $tags=explode(',',$vo['post_keywords']);
+                            </php>
+                            <span>
+                                <volist name="tags" id="tag">
+                                    <a href="javascript:;" class="tags" name="{$tag}">{$tag} </a>
+                                </volist>
+                            </span>
                             <span class="fly-list-hint">
                                 <i class="iconfont" title="回答">&#xe60c;</i> {$vo.comment_count}
                                 <i class="iconfont" title="人气">&#xe60b;</i> {$vo.post_hits}
@@ -58,9 +65,9 @@
                         <div class="liu-article-img">
                             <a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" class="fly-list-pic">
                                 <if condition="empty($smeta['thumb'])">
-                                    <img src="__PUBLIC__/images/default_article.png" class="img-responsive" alt="{$vo.post_title}"/>
+                                    <img src="__PUBLIC__/images/default_article.png" class="liu-img-responsive" alt="{$vo.post_title}"/>
                                     <else />
-                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive img-thumbnail" alt="{$vo.post_title}" />
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="liu-img-responsive img-thumbnail" alt="{$vo.post_title}" />
                                 </if>
                             </a>
                         </div>
