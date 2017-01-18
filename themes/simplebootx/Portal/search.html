@@ -53,7 +53,7 @@
 						</p>
 						<div class="liu-article-img">
 							<a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" class="fly-list-pic">
-								<if condition="empty($smeta['thumb'])">
+								<if condition="!empty($smeta['thumb'])">
 									<img src="__PUBLIC__/images/default_article.png" class="img-responsive" alt="{$vo.post_title}"/>
 									<else />
 									<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive img-thumbnail" alt="{$vo.post_title}" />
